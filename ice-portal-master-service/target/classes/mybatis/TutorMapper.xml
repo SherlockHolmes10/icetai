@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icetai.portal.master.mapper.TutorMapper">
+  <resultMap id="BaseResultMap" type="com.icetai.portal.master.domain.Tutor">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="mid" jdbcType="VARCHAR" property="username" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="rid" jdbcType="VARCHAR" property="rid" />
+    <result column="card_type" jdbcType="INTEGER" property="cardType" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="is_certified" jdbcType="INTEGER" property="isCertified" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="chat_code" jdbcType="VARCHAR" property="chat_code" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="live_code" jdbcType="INTEGER" property="live_code" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, username, password, nickname, `desc`, email ,mobile,wechat,qq,status,last_login_time,
+    sex, avatar, rid, card_type, real_name, id_card, is_certified, address, age, birthday, 
+    bank_card,chat_code,location,live_code, created_at, updated_at, created_by, updated_by
+  </sql>
+  <sql id="Mentor_List">
+
+  </sql>
+<!--  <select id="getAll" resultMap="BaseResultMap">-->
+<!--    SELECT-->
+<!--    <include refid="Mentor_List"/>-->
+<!--    FROM ipuc_user-->
+<!--  </select>-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select 
+        b.uid, b.username,`desc`, b.avatar,title
+    from ipuc_master a
+        right join ipuc_user b on a.uid=b.uid
+        right join ipsm_trade c on a.trade_id=c.tid
+    where b.uid  = #{uid,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icetai.portal.master.domain.Tutor">
+    update ipuc_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        `desc` = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null">
+        rid = #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null">
+        card_type = #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="isCertified != null">
+        is_certified = #{isCertified,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null">
+        bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+<!--  <update id="updateByPrimaryKey" parameterType="com.icetai.portal.center.domain.Tutor">-->
+<!--    update ipuc_user-->
+<!--    set username = #{username,jdbcType=VARCHAR},-->
+<!--      password = #{password,jdbcType=VARCHAR},-->
+<!--      nickname = #{nickname,jdbcType=VARCHAR},-->
+<!--      des = #{des,jdbcType=VARCHAR},-->
+<!--      email = #{email,jdbcType=VARCHAR},-->
+<!--      mobile = #{mobile,jdbcType=VARCHAR},-->
+<!--      wechat = #{wechat,jdbcType=VARCHAR},-->
+<!--      qq = #{qq,jdbcType=VARCHAR},-->
+<!--      status = #{status,jdbcType=INTEGER},-->
+<!--      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},-->
+<!--      sex = #{sex,jdbcType=INTEGER},-->
+<!--      avatar = #{avatar,jdbcType=VARCHAR},-->
+<!--      rid = #{rid,jdbcType=VARCHAR},-->
+<!--      card_type = #{cardType,jdbcType=INTEGER},-->
+<!--      real_name = #{realName,jdbcType=VARCHAR},-->
+<!--      id_card = #{idCard,jdbcType=VARCHAR},-->
+<!--      is_certified = #{isCertified,jdbcType=INTEGER},-->
+<!--      address = #{address,jdbcType=VARCHAR},-->
+<!--      age = #{age,jdbcType=INTEGER},-->
+<!--      birthday = #{birthday,jdbcType=VARCHAR},-->
+<!--      bank_card = #{bankCard,jdbcType=VARCHAR},-->
+<!--      created_at = #{createdAt,jdbcType=TIMESTAMP},-->
+<!--      updated_at = #{updatedAt,jdbcType=TIMESTAMP},-->
+<!--      created_by = #{createdBy,jdbcType=VARCHAR},-->
+<!--      updated_by = #{updatedBy,jdbcType=VARCHAR}-->
+<!--    where uid = #{uid,jdbcType=VARCHAR}-->
+<!--  </update>-->
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">-->
+<!--    delete from ipuc_user-->
+<!--    where uid = #{uid,jdbcType=VARCHAR}-->
+<!--  </delete>-->
+<!--  <insert id="insert" parameterType="com.icetai.portal.center.domain.Tutorr">-->
+<!--    insert into ipuc_user (uid, username, password, -->
+<!--      nickname, tutor, email, -->
+<!--      mobile, wechat, qq, -->
+<!--      status, last_login_time, sex, -->
+<!--      avatar, rid, card_type, -->
+<!--      real_name, id_card, is_certified, -->
+<!--      address, age, birthday, -->
+<!--      bank_card, created_at, updated_at, -->
+<!--      created_by, updated_by)-->
+<!--    values (#{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, -->
+<!--      #{nickname,jdbcType=VARCHAR}, #{tutor,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, -->
+<!--      #{mobile,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, -->
+<!--      #{status,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{sex,jdbcType=INTEGER}, -->
+<!--      #{avatar,jdbcType=VARCHAR}, #{rid,jdbcType=VARCHAR}, #{cardType,jdbcType=INTEGER}, -->
+<!--      #{realName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{isCertified,jdbcType=INTEGER}, -->
+<!--      #{address,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR}, -->
+<!--      #{bankCard,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, -->
+<!--      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR})-->
+<!--  </insert>-->
+<!--  <insert id="insertSelective" parameterType="com.icetai.portal.center.domain.Tutorr">-->
+<!--    insert into ipuc_user-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--      <if test="uid != null">-->
+<!--        uid,-->
+<!--      </if>-->
+<!--      <if test="username != null">-->
+<!--        username,-->
+<!--      </if>-->
+<!--      <if test="password != null">-->
+<!--        password,-->
+<!--      </if>-->
+<!--      <if test="nickname != null">-->
+<!--        nickname,-->
+<!--      </if>-->
+<!--      <if test="tutor != null">-->
+<!--        tutor,-->
+<!--      </if>-->
+<!--      <if test="email != null">-->
+<!--        email,-->
+<!--      </if>-->
+<!--      <if test="mobile != null">-->
+<!--        mobile,-->
+<!--      </if>-->
+<!--      <if test="wechat != null">-->
+<!--        wechat,-->
+<!--      </if>-->
+<!--      <if test="qq != null">-->
+<!--        qq,-->
+<!--      </if>-->
+<!--      <if test="status != null">-->
+<!--        status,-->
+<!--      </if>-->
+<!--      <if test="lastLoginTime != null">-->
+<!--        last_login_time,-->
+<!--      </if>-->
+<!--      <if test="sex != null">-->
+<!--        sex,-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        avatar,-->
+<!--      </if>-->
+<!--      <if test="rid != null">-->
+<!--        rid,-->
+<!--      </if>-->
+<!--      <if test="cardType != null">-->
+<!--        card_type,-->
+<!--      </if>-->
+<!--      <if test="realName != null">-->
+<!--        real_name,-->
+<!--      </if>-->
+<!--      <if test="idCard != null">-->
+<!--        id_card,-->
+<!--      </if>-->
+<!--      <if test="isCertified != null">-->
+<!--        is_certified,-->
+<!--      </if>-->
+<!--      <if test="address != null">-->
+<!--        address,-->
+<!--      </if>-->
+<!--      <if test="age != null">-->
+<!--        age,-->
+<!--      </if>-->
+<!--      <if test="birthday != null">-->
+<!--        birthday,-->
+<!--      </if>-->
+<!--      <if test="bankCard != null">-->
+<!--        bank_card,-->
+<!--      </if>-->
+<!--      <if test="createdAt != null">-->
+<!--        created_at,-->
+<!--      </if>-->
+<!--      <if test="updatedAt != null">-->
+<!--        updated_at,-->
+<!--      </if>-->
+<!--      <if test="createdBy != null">-->
+<!--        created_by,-->
+<!--      </if>-->
+<!--      <if test="updatedBy != null">-->
+<!--        updated_by,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--      <if test="uid != null">-->
+<!--        #{uid,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="username != null">-->
+<!--        #{username,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="password != null">-->
+<!--        #{password,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="nickname != null">-->
+<!--        #{nickname,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="tutor != null">-->
+<!--        #{tutor,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="email != null">-->
+<!--        #{email,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="mobile != null">-->
+<!--        #{mobile,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="wechat != null">-->
+<!--        #{wechat,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="qq != null">-->
+<!--        #{qq,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="status != null">-->
+<!--        #{status,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="lastLoginTime != null">-->
+<!--        #{lastLoginTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="sex != null">-->
+<!--        #{sex,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        #{avatar,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="rid != null">-->
+<!--        #{rid,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="cardType != null">-->
+<!--        #{cardType,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="realName != null">-->
+<!--        #{realName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="idCard != null">-->
+<!--        #{idCard,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="isCertified != null">-->
+<!--        #{isCertified,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="address != null">-->
+<!--        #{address,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="age != null">-->
+<!--        #{age,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="birthday != null">-->
+<!--        #{birthday,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="bankCard != null">-->
+<!--        #{bankCard,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="createdAt != null">-->
+<!--        #{createdAt,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="updatedAt != null">-->
+<!--        #{updatedAt,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="createdBy != null">-->
+<!--        #{createdBy,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="updatedBy != null">-->
+<!--        #{updatedBy,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </insert>-->
+
+</mapper>

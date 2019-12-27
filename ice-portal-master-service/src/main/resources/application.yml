@@ -1,0 +1,24 @@
+---
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ipuc?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    time-zone: Asia/Shanghai
+  redis:
+    host: 127.0.0.1
+    port: 6379
+server:
+  port: 9522
+
+#配置MyBatis
+mybatis:
+  type-aliases-package: com.icetai.portal.master.domain
+  mapper-locations: classpath:mybatis/*Mapper.xml
+
+  configuration:
+    mapUnderscoreToCamelCase: true
+    logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
+---

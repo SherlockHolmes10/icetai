@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icetai.portal.master.mapper.ReplaceMasterMapper">
+    <resultMap id="BaseResultMap" type="com.icetai.portal.master.domain.ReplaceMaster">
+        <id column="mid" jdbcType="VARCHAR" property="mid"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="trade_id" jdbcType="VARCHAR" property="tradeId"/>
+        <result column="major_id" jdbcType="VARCHAR" property="majorId"/>
+        <result column="apply_at" jdbcType="TIMESTAMP" property="applyAt"/>
+        <result column="approved_at" jdbcType="TIMESTAMP" property="approvedAt"/>
+        <result column="approved_by" jdbcType="VARCHAR" property="approvedBy"/>
+        <result column="kind_of_applying" jdbcType="INTEGER" property="kindOfApplying"/>
+        <result column="is_signed" jdbcType="INTEGER" property="isSigned"/>
+        <result column="dept_id" jdbcType="VARCHAR" property="deptId"/>
+        <result column="signed_at" jdbcType="TIMESTAMP" property="signedAt"/>
+        <result column="contract_id" jdbcType="VARCHAR" property="contractId"/>
+        <result column="fans" jdbcType="INTEGER" property="fans"/>
+        <result column="is_hot_tip" jdbcType="INTEGER" property="isHotTip"/>
+        <result column="hot_end_at" jdbcType="TIMESTAMP" property="hotEndAt"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="student" jdbcType="INTEGER" property="student"/>
+        <result column="course_nums" jdbcType="INTEGER" property="courseNums"/>
+        <result column="article_nums" jdbcType="INTEGER" property="articleNums"/>
+
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="chat_code" jdbcType="VARCHAR" property="chat_code"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="live_code" jdbcType="INTEGER" property="live_code"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="own_uid" jdbcType="INTEGER" property="own_uid"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    mid, uid, trade_id, major_id, apply_at, approved_at, approved_by, kind_of_applying, 
+    is_signed, dept_id, signed_at, contract_id, fans, is_hot_tip, hot_end_at, status, 
+    created_at, updated_at, created_by, updated_by, student, course_nums, article_nums
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ipuc_master
+        where mid = #{mid,jdbcType=VARCHAR}
+    </select>
+
+    <!--查询未关注的导师-->
+    <select id="selectchanging" resultMap="BaseResultMap">
+        select	iu.avatar,iu.username,it.title,`desc`,iu.location,
+                im.fans,im.student,im.course_nums,article_nums,
+                chat_code,live_code
+        from ipuc_master im
+        left join ipuc_user iu on im.uid=iu.uid
+        left join ipsm_trade it on im.trade_id=it.tid
+        where not exists
+        (select * from ipms_follow iw where im.uid=iw.uid)
+        order by im.mid asc ;
+  </select>
+
+    <!--按城市查询未关注的导师-->
+    <select id="selectcity" resultMap="BaseResultMap">
+        select	iu.avatar,iu.username,it.title,`desc`,iu.location,
+                im.fans,im.student,im.course_nums,article_nums,
+                chat_code,live_code
+        from ipuc_master im
+        left join ipuc_user iu on im.uid=iu.uid
+        left join ipsm_trade it on im.trade_id=it.tid
+        where not exists
+        (select * from ipms_follow iw where im.uid=iw.uid)
+        and iu.location = #{location}
+        order by im.mid asc ;
+  </select>
+
+    <!--查询人气导师-->
+    <select id="selectfans" resultMap="BaseResultMap">
+        select	iu.avatar,iu.username,it.title,im.fans
+        from ipuc_master im
+        left join ipuc_user iu on im.uid=iu.uid
+        left join ipsm_trade it on im.trade_id=it.tid
+        order by im.fans desc ;
+  </select>
+</mapper>
